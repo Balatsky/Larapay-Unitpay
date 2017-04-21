@@ -1,0 +1,37 @@
+{
+  "name": "balatsky/larapay-unitpay",
+  "description": "This package is Larapay extension for Unitpay payment gateway.",
+  "keywords": [
+    "skylex",
+    "larapay",
+    "payments",
+    "transactions",
+    "unitpay"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/Balatsky/Larapay-Unitpay",
+  "support": {
+    "issues": "https://github.com/Balatsky/Larapay-Unitpay/issues",
+    "source": "https://github.com/Balatsky/Larapay-Unitpay"
+  },
+  "authors": [
+    {
+      "name": "Alex Balatsky",
+      "email": "alex@skylex.pro"
+    }
+  ],
+  "require": {
+    "balatsky/larapay": ">=0.1.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^5.7"
+  },
+  "autoload": {
+    "psr-4": {
+      "Skylex\\Larapay\\Gateways\\": "src"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit"
+  }
+}
