@@ -21,10 +21,10 @@
     }
   ],
   "require": {
-    "balatsky/larapay": ">=0.1.0"
+    "balatsky/larapay": ">=0.2.1"
   },
   "require-dev": {
-    "phpunit/phpunit": "^5.7"
+    "phpunit/phpunit": "^6.1"
   },
   "autoload": {
     "psr-4": {

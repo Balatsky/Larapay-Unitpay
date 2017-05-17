@@ -1,0 +1,23 @@
+{
+  "request": {
+    "method": "check",
+    "params": {
+      "b": "bob",
+      "c": "sam",
+      "a": "tod",
+      "signature": "9d92a4b507bb73f308aada4c9e82dbc55bdc4273ad5aaf7f62ac3d2ea423819f"
+    }
+  },
+
+  "config": {
+    "algo":   "sha256",
+    "public": "",
+    "secret": "a1b1c1d1"
+  },
+
+  "params": {
+    "b": "bob",
+    "c": "sam",
+    "a": "tod"
+  }
+}

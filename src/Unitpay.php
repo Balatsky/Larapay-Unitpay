@@ -5,7 +5,6 @@ namespace Skylex\Larapay\Gateways;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
 use Skylex\Larapay\Abstracts\Gateway;
-use Illuminate\Contracts\Config\Repository;
 use Skylex\Larapay\Contracts\Gateway as Contract;
 
 class Unitpay extends Gateway implements Contract
@@ -38,7 +37,7 @@ class Unitpay extends Gateway implements Contract
      *
      * @return string
      */
-    public function getRedirectUrl(): string
+    public function getInteractionUrl(): string
     {
         return 'https://unitpay.ru/pay/' . $this->config->get('public');
     }
@@ -46,16 +45,19 @@ class Unitpay extends Gateway implements Contract
     /**
      * Sign outcome request (insert request signature in request parameters)
      *
-     * @param Repository $data
+     * @param array $data
      *
      * @return string
      */
-    public function sign(Repository $data): string
+    public function sign(array $data): string
     {
-        $data = Arr::sortRecursive($data->all());
-        $withSecret = array_add($data, 'secret', $this->config->get('secret'));
+        $data = Arr::except($data, ['sign', 'signature']);
 
-        return hash($this->config->get('algo'), join('{up}', $withSecret));
+        ksort($data);
+
+        $data[] = $this->config->get('secret');
+
+        return hash($this->config->get('algo', 'md5'), join('{up}', $data));
     }
 
     /**
@@ -69,14 +71,13 @@ class Unitpay extends Gateway implements Contract
     {
         list($method, $params) = array_values($request->all());
 
-        $incomeSignature = $params['signature'];
-        $withoutSignature = Arr::except($params, ['sign', 'signature']);
+        $data      = Arr::except($params, ['sign', 'signature']);
 
-        array_push($withoutSignature, $this->config->get('secret'));
-        array_unshift($withoutSignature, $method);
+        array_push   ($data, $this->config->get('secret'));
+        array_unshift($data, $method);
 
-        $signature = hash($this->config->get('algo'), join('{up}', $withoutSignature));
+        $signature = hash($this->config->get('algo', 'md5'), join('{up}', $data));
 
-        return $incomeSignature == $signature;
+        return $params['signature'] == $signature;
     }
 }
